@@ -60,7 +60,11 @@ class ssh::params {
       case $::operatingsystem {
         sles: {
           $service_name = 'sshd'
-          $sftp_server_path = '/usr/lib64/ssh/sftp-server'
+          if versioncmp("$::operatingsystemmajrelease", '12') >= 0 {
+            $sftp_server_path = '/usr/lib/ssh/sftp-server'
+          } else {
+            $sftp_server_path = '/usr/lib64/ssh/sftp-server'
+          }
         }
         opensuse: {
           $service_name = 'sshd'
